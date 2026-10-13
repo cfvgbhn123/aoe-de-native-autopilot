@@ -109,20 +109,22 @@ python -X utf8 -u tools/verify_aoe_recovery.py --cycles 1 --soak 60
 - 暂停恢复后立即更换世界可能使待回收对象留存到游戏进程退出。
 - 原生 hook 与看门狗保留到游戏进程退出，不执行在线卸载。
 
-### 如何发布到 GitHub
+### GitHub 仓库与后续贡献
 
-建议仓库名：`aoe-de-native-autopilot`。在 GitHub 创建同名空仓库后，在本目录执行：
+公开源码仓库：<https://github.com/cfvgbhn123/aoe-de-native-autopilot>。克隆后可创建分支、提交修改并推送：
 
 ```powershell
-git init
-git add .
-git commit -m "Initial experimental source release"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/aoe-de-native-autopilot.git
-git push -u origin main
+git clone https://github.com/cfvgbhn123/aoe-de-native-autopilot.git
+cd aoe-de-native-autopilot
+git switch -c fix/short-description
+# 修改代码后检查并提交
+git status --short
+git add <修改的文件>
+git commit -m "Describe the change"
+git push -u origin fix/short-description
 ```
 
-把 `YOUR_USERNAME` 换成自己的用户名。以上是首次发布的命令示例。`aoe_ai_config.json`、构建产物与日志已被忽略；提交前用 `git status --short` 和 `git diff --cached` 确认内容。
+然后在 GitHub 发起 Pull Request。`aoe_ai_config.json`、构建产物与日志已被忽略；提交前检查 `git status --short` 和暂存内容。
 
 首次 GitHub Release 建议使用 `v0.1.0-alpha.1` 并标为 **Pre-release**，附源码 ZIP 和验证说明。不要把 alpha 描述为已经通过完整战局验收的稳定版。
 
@@ -182,9 +184,9 @@ Run `python -X utf8 -m unittest discover -s tests -v` and `python -X utf8 tools/
 
 Hardest native AI can receive resource bonuses. Protocol 6's resource discovery replay remains unverified in a live match. Historical exploration-map state and scouting require further observation. The strategy-loader map classification argument still needs correction based on the verified original call path. Real save/load transitions, full-match outcomes and hours-long stability remain unverified. Pending cleanup after a paused world replacement can persist until process exit; hooks/watchdogs remain loaded until then.
 
-### GitHub publishing and license
+### GitHub repository and contributions
 
-Suggested repository name: `aoe-de-native-autopilot`. Create an empty repository, then use the Git commands in the Chinese publishing section, replacing `YOUR_USERNAME`. These commands describe an initial publication workflow. Local config, build outputs and runtime logs are ignored. Review staged files before pushing.
+The public source repository is <https://github.com/cfvgbhn123/aoe-de-native-autopilot>. Clone it, create a feature branch, commit your change and push that branch before opening a Pull Request. Local config, build outputs and runtime logs are ignored; review staged files before committing.
 
 Use `v0.1.0-alpha.1` for an initial **Pre-release**, with the source archive and validation notes. The original project code uses the [MIT License](LICENSE). Game assets, scripts and trademarks remain with their respective owners. This is an unofficial community research tool. Contributions and reproducible reports are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
