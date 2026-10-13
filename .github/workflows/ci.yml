@@ -1,0 +1,25 @@
+name: Offline validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Prepare local configuration
+        shell: pwsh
+        run: Copy-Item aoe_ai_config.example.json aoe_ai_config.json
+      - name: Python offline tests
+        run: python -X utf8 -m unittest discover -s tests -v
+      - name: Compile bridge
+        run: python -X utf8 native/build_aoe.py
+      - name: Native fixtures
+        run: python -X utf8 tools/test_native_policy.py
